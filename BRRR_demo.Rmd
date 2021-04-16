@@ -4,8 +4,8 @@ output: html_notebook
 ---
 
 ## [`BRRR`](https://github.com/brooke-watson/BRRR) by Brook Watson Madubuonwu
-####  - inspired by Rasmus Bååth's [`beepr`](https://github.com/rasmusab/beepr) package
-####  - check out Brook's awesome [blog](https://brooke.science/) for more fun w/R
+ - #### inspired by Rasmus Bååth's [`beepr`](https://github.com/rasmusab/beepr) package
+ - #### check out Brook's awesome [blog](https://brooke.science/) for more fun w/R
 
 ```{r}
 # Install BRRR
@@ -62,7 +62,9 @@ skrrrahh("wav_files/Cat_Meow.wav")
 
 ```{r}
 # example for announcing the completion of your function
-## https://cnuge.github.io/post/progress_bar/
+# slow_math() is just a function that adds 2 to a number 
+# after waiting 1 second
+# I found it here: https://cnuge.github.io/post/progress_bar/
 
 slow_math = function(x){
   Sys.sleep(1)
@@ -74,7 +76,7 @@ slow_function = function(x){
   out= c()
   print("Running slow math on the inputs:")
   
-  # progress bar to show that the function is woeking even though it's slow
+  # progress bar to show that the function is working even though it's slow
   progress_bar = txtProgressBar(min=0, max=length(x), 
                                 width = 20 * length(x), 
                                 style = 1, 
@@ -95,14 +97,14 @@ slow_function = function(x){
 }
 
 output = slow_function(c(1,2,3))
-
-
 ```
 
 ```{r}
 # Change your options to have DJ Khaled console you everytime you hit an error
 # message.
 options(error = function() {skrrrahh(34)})
+# Incorrect implementation of slow_function()
+# so we can hear DJ Khaled
 output = slow_function(c(1,2,"b"))
 ```
 
