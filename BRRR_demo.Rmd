@@ -1,16 +1,18 @@
 ---
 title: "BRRR demo"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ## [`BRRR`](https://github.com/brooke-watson/BRRR) by Brook Watson Madubuonwu
  - #### inspired by Rasmus Bååth's [`beepr`](https://github.com/rasmusab/beepr) package
  - #### check out Brook's awesome [blog](https://brooke.science/) for more fun w/R
 
+Install `BRRR`
 ```{r}
-# Install BRRR
-if(!require(devtools)) {install.packages("devtools")}
-devtools::install_github("brooke-watson/BRRR")
+#if(!require(devtools)) {install.packages("devtools")}
+#devtools::install_github("brooke-watson/BRRR")
 
 library(BRRR)
 ```
@@ -55,22 +57,24 @@ skrrrahh("liljon")
 ```{r}
 setwd("~/Desktop/repos/Rladies/BRRR_demo")
 # path to a new wave file
-# these are from https://soundbible.com
+# this is from https://soundbible.com
 # cat's meow
 skrrrahh("wav_files/Cat_Meow.wav")
 ```
 
+Flava Flav announcing the completion of `slow_function()`
 ```{r}
-# example for announcing the completion of your function
 # slow_math() is just a function that adds 2 to a number 
 # after waiting 1 second
-# I found it here: https://cnuge.github.io/post/progress_bar/
-
+# I found it here: https://cnuge.github.io/post/progress_bar
+# input is a number
 slow_math = function(x){
   Sys.sleep(1)
   x + 2
 }
 
+# slow_function() loops over slow_math()
+# the input is a string of numbers
 slow_function = function(x){
   
   out= c()
@@ -78,8 +82,8 @@ slow_function = function(x){
   
   # progress bar to show that the function is working even though it's slow
   progress_bar = txtProgressBar(min=0, max=length(x), 
-                                width = 20 * length(x), 
-                                style = 1, 
+                                width = NA, 
+                                style = 3, 
                                 char="=")
   
   # loop through the provided numbers 
@@ -95,17 +99,22 @@ slow_function = function(x){
   skrrrahh("flava")
   return(out)  
 }
-
-output = slow_function(c(1,2,3))
+```
+```{r}
+#run the function
+slow_function(c(1,2,3))
 ```
 
+DJ Khaled consoling us when we make an error
 ```{r}
 # Change your options to have DJ Khaled console you everytime you hit an error
 # message.
 options(error = function() {skrrrahh(34)})
+```
+```{r eval = F}
 # Incorrect implementation of slow_function()
 # so we can hear DJ Khaled
-output = slow_function(c(1,2,"b"))
+slow_function(c(1,2,"b"))
 ```
 
 ## [`beepr`](https://github.com/rasmusab/beepr) for non-rap noises
@@ -128,12 +137,61 @@ output = slow_function(c(1,2,"b"))
 11) "sword"
 
 ```{r}
-install.packages("beepr")
+# install.packages("beepr")
 library(beepr)
 beep("coin")
 ```
 ```{r}
+beep("mario")
+```
+
+```{r}
 # random beep
 beep(0)
 ```
+
+`slow_function()` with `beepr`
+```{r}
+# input is a string of numbers
+slow_function = function(x){
+  
+  out= c()
+  print("Running slow math on the inputs:")
+  
+  # progress bar to show that the function is working even though it's slow
+  progress_bar = txtProgressBar(min=0, max=length(x), 
+                                width = NA, 
+                                style = 3, 
+                                char="=")
+  
+  # loop through the provided numbers 
+  for(i in 1:length(x)){
+    out = c(out , slow_math(x[[i]]))
+    #Increase the amount the progress bar is filled by setting the value to i.
+    setTxtProgressBar(progress_bar, value = i)
+  }
+  
+  close(progress_bar)
+  
+  # "Work Complete" when the function is done
+  beep(4)
+  return(out)  
+}
+```
+```{r}
+#run the function
+slow_function(c(1,2,3))
+```
+
+[Wilhelm scream](https://www.youtube.com/watch?v=W0V-2WdubTs&ab_channel=WatchMojo.com) when there's an error
+```{r}
+options(error = function() {beep("wilhelm")})
+```
+```{r eval = F}
+# Incorrect implementation of slow_function()
+# so we can hear Wilhelm scream
+slow_function(c(1,2,"b"))
+```
+
+
 
